@@ -5,9 +5,8 @@ A full-featured CLI todo app with priorities, due dates, and categories.
 """
 
 import json
-import os
 import sys
-from datetime import datetime, date
+from datetime import datetime
 from pathlib import Path
 from typing import List, Optional, Dict
 import argparse
@@ -290,11 +289,11 @@ def print_stats(stats: Dict):
     print(f"\nBy Priority (pending):")
     for priority, count in stats["by_priority"].items():
         emoji = {"high": "🔴", "medium": "🟡", "low": "🟢"}.get(priority, "⚪")
-        print(f"  {emoji} {priority.capitalize()}: {count}")
+        print(f"{emoji} {priority.capitalize()}: {count}")
     if stats["by_category"]:
         print(f"\nBy Category (pending):")
         for cat, count in sorted(stats["by_category"].items()):
-            print(f"  • {cat}: {count}")
+            print(f"• {cat}: {count}")
     print("=" * 40 + "\n")
 
 
