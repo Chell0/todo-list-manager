@@ -53,13 +53,9 @@ class TodoItem:
 
     def __str__(self) -> str:
         status = "✓" if self.completed else "○"
-        priority_emoji = {"high": "🔴", "medium": "🟡", "low": "🟢"}.get(
-            self.priority, "⚪"
-        )
+        priority_emoji = {"high": "🔴", "medium": "🟡", "low": "🟢"}.get(self.priority, "⚪")
         due = f" (due: {self.due_date})" if self.due_date else ""
-        return (
-            f"{status} [{self.id}] {priority_emoji} {self.title}{due} [{self.category}]"
-        )
+        return f"{status} [{self.id}] {priority_emoji} {self.title}{due} [{self.category}]"
 
 
 class TodoManager:
@@ -246,9 +242,7 @@ Examples:
 
     # List Todos
     list_parser = subparsers.add_parser("list", help="List todos")
-    list_parser.add_argument(
-        "-a", "--all", action="store_true", help="Show completed todos too"
-    )
+    list_parser.add_argument("-a", "--all", action="store_true", help="Show completed todos too")
     list_parser.add_argument("-c", "--category", help="Filter by category")
     list_parser.add_argument(
         "-p", "--priority", choices=["high", "medium", "low"], help="Filter by priority"
@@ -325,9 +319,7 @@ def main():
         print(f"✓ Added: {todo}")
 
     elif args.command == "list":
-        todos = manager.list(
-            show_all=args.all, category=args.category, priority=args.priority
-        )
+        todos = manager.list(show_all=args.all, category=args.category, priority=args.priority)
         if not todos:
             filter_info = []
             if args.category:
