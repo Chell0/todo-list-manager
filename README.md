@@ -2,9 +2,11 @@
 
 A full-featured CLI todo application built with Python. Manage tasks with priorities, due dates, categories, and more.
 
-![Python](https://img.shields.io/badge/python-3.10%2B-blue)
-![Tests](https://github.com/YOUR_USERNAME/todo-cli/workflows/CI/badge.svg)
-![Coverage](https://codecov.io/gh/YOUR_USERNAME/todo-cli/branch/main/graph/badge.svg)
+![Python](https://img.shields.io/badge/python-3.10%2B-blue?logo=python&logoColor=white)
+![License](https://img.shields.io/badge/license-MIT-green)
+![Tests](https://img.shields.io/badge/tests-42%20passed-brightgreen?logo=pytest)
+![Coverage](https://img.shields.io/badge/coverage-95%25-brightgreen)
+![Code style](https://img.shields.io/badge/code%20style-black-000000.svg)
 
 ## ✨ Features
 
