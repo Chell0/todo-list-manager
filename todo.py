@@ -17,14 +17,14 @@ class TodoItem:
     """Represents a single todo item."""
 
     def __init__(
-            self,
-            title: str,
-            priority: str = "medium",
-            due_date: Optional[str] = None,
-            category: str = "general",
-            completed: bool = False,
-            created_at: Optional[str] = None,
-            id: Optional[int] = None
+        self,
+        title: str,
+        priority: str = "medium",
+        due_date: Optional[str] = None,
+        category: str = "general",
+        completed: bool = False,
+        created_at: Optional[str] = None,
+        id: Optional[int] = None,
     ):
         self.id = id
         self.title = title
@@ -43,7 +43,7 @@ class TodoItem:
             "due_date": self.due_date,
             "category": self.category,
             "completed": self.completed,
-            "created_at": self.created_at
+            "created_at": self.created_at,
         }
 
     @classmethod
@@ -53,9 +53,13 @@ class TodoItem:
 
     def __str__(self) -> str:
         status = "✓" if self.completed else "○"
-        priority_emoji = {"high": "🔴", "medium": "🟡", "low": "🟢"}.get(self.priority, "⚪")
+        priority_emoji = {"high": "🔴", "medium": "🟡", "low": "🟢"}.get(
+            self.priority, "⚪"
+        )
         due = f" (due: {self.due_date})" if self.due_date else ""
-        return f"{status} [{self.id}] {priority_emoji} {self.title}{due} [{self.category}]"
+        return (
+            f"{status} [{self.id}] {priority_emoji} {self.title}{due} [{self.category}]"
+        )
 
 
 class TodoManager:
@@ -84,11 +88,11 @@ class TodoManager:
             json.dump([todo.to_dict() for todo in self.todos], f, indent=2)
 
     def add(
-            self,
-            title: str,
-            priority: str = "medium",
-            due_date: Optional[str] = None,
-            category: str = "general"
+        self,
+        title: str,
+        priority: str = "medium",
+        due_date: Optional[str] = None,
+        category: str = "general",
     ) -> TodoItem:
         """Add a new todo item."""
         todo = TodoItem(
@@ -96,7 +100,7 @@ class TodoManager:
             priority=priority,
             due_date=due_date,
             category=category,
-            id=self.next_id
+            id=self.next_id,
         )
         self.todos.append(todo)
         self.next_id += 1
@@ -104,10 +108,10 @@ class TodoManager:
         return todo
 
     def list(
-            self,
-            show_all: bool = False,
-            category: Optional[str] = None,
-            priority: Optional[str] = None
+        self,
+        show_all: bool = False,
+        category: Optional[str] = None,
+        priority: Optional[str] = None,
     ) -> List[TodoItem]:
         """List todo items with optional filtering."""
         todos = self.todos if show_all else [t for t in self.todos if not t.completed]
@@ -118,10 +122,12 @@ class TodoManager:
             todos = [t for t in todos if t.priority == priority.lower()]
 
         # Sort by priority, then due date
-        todos.sort(key=lambda t: (
-            self.PRIORITY_ORDER.get(t.priority, 3),
-            t.due_date or "9999-99-99"
-        ))
+        todos.sort(
+            key=lambda t: (
+                self.PRIORITY_ORDER.get(t.priority, 3),
+                t.due_date or "9999-99-99",
+            )
+        )
         return todos
 
     def complete(self, todo_id: int) -> bool:
@@ -152,12 +158,12 @@ class TodoManager:
         return False
 
     def edit(
-            self,
-            todo_id: int,
-            title: Optional[str] = None,
-            priority: Optional[str] = None,
-            due_date: Optional[str] = None,
-            category: Optional[str] = None
+        self,
+        todo_id: int,
+        title: Optional[str] = None,
+        priority: Optional[str] = None,
+        due_date: Optional[str] = None,
+        category: Optional[str] = None,
     ) -> bool:
         """Edit a todo item."""
         for todo in self.todos:
@@ -192,7 +198,7 @@ class TodoManager:
             "completed": completed,
             "pending": pending,
             "by_priority": by_priority,
-            "by_category": by_category
+            "by_category": by_category,
         }
 
     def clear_completed(self) -> int:
@@ -218,7 +224,7 @@ Examples:
   %(prog)s done 1
   %(prog)s delete 1
   %(prog)s stats
-        """
+        """,
     )
 
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
@@ -226,19 +232,27 @@ Examples:
     # Add Todo
     add_parser = subparsers.add_parser("add", help="Add a new todo")
     add_parser.add_argument("title", help="Todo title")
-    add_parser.add_argument("-p", "--priority", choices=["high", "medium", "low"],
-                            default="medium", help="Priority level")
+    add_parser.add_argument(
+        "-p",
+        "--priority",
+        choices=["high", "medium", "low"],
+        default="medium",
+        help="Priority level",
+    )
     add_parser.add_argument("-d", "--due", help="Due date (YYYY-MM-DD)")
-    add_parser.add_argument("-c", "--category", default="general",
-                            help="Category (default: general)")
+    add_parser.add_argument(
+        "-c", "--category", default="general", help="Category (default: general)"
+    )
 
     # List Todos
     list_parser = subparsers.add_parser("list", help="List todos")
-    list_parser.add_argument("-a", "--all", action="store_true",
-                             help="Show completed todos too")
+    list_parser.add_argument(
+        "-a", "--all", action="store_true", help="Show completed todos too"
+    )
     list_parser.add_argument("-c", "--category", help="Filter by category")
-    list_parser.add_argument("-p", "--priority", choices=["high", "medium", "low"],
-                             help="Filter by priority")
+    list_parser.add_argument(
+        "-p", "--priority", choices=["high", "medium", "low"], help="Filter by priority"
+    )
 
     # Done Todos
     done_parser = subparsers.add_parser("done", help="Mark todo as completed")
@@ -256,8 +270,9 @@ Examples:
     edit_parser = subparsers.add_parser("edit", help="Edit a todo")
     edit_parser.add_argument("id", type=int, help="Todo ID")
     edit_parser.add_argument("-t", "--title", help="New title")
-    edit_parser.add_argument("-p", "--priority", choices=["high", "medium", "low"],
-                             help="New priority")
+    edit_parser.add_argument(
+        "-p", "--priority", choices=["high", "medium", "low"], help="New priority"
+    )
     edit_parser.add_argument("-d", "--due", help="New due date (YYYY-MM-DD)")
     edit_parser.add_argument("-c", "--category", help="New category")
 
@@ -279,12 +294,12 @@ def print_stats(stats: Dict):
     print(f"Completed:      {stats['completed']}")
     print(f"Pending:        {stats['pending']}")
     print(f"\nBy Priority (pending):")
-    for priority, count in stats['by_priority'].items():
+    for priority, count in stats["by_priority"].items():
         emoji = {"high": "🔴", "medium": "🟡", "low": "🟢"}.get(priority, "⚪")
         print(f"  {emoji} {priority.capitalize()}: {count}")
-    if stats['by_category']:
+    if stats["by_category"]:
         print(f"\nBy Category (pending):")
-        for cat, count in sorted(stats['by_category'].items()):
+        for cat, count in sorted(stats["by_category"].items()):
             print(f"  • {cat}: {count}")
     print("=" * 40 + "\n")
 
@@ -305,15 +320,13 @@ def main():
             title=args.title,
             priority=args.priority,
             due_date=args.due,
-            category=args.category
+            category=args.category,
         )
         print(f"✓ Added: {todo}")
 
     elif args.command == "list":
         todos = manager.list(
-            show_all=args.all,
-            category=args.category,
-            priority=args.priority
+            show_all=args.all, category=args.category, priority=args.priority
         )
         if not todos:
             filter_info = []
@@ -355,11 +368,11 @@ def main():
 
     elif args.command == "edit":
         if manager.edit(
-                args.id,
-                title=args.title,
-                priority=args.priority,
-                due_date=args.due,
-                category=args.category
+            args.id,
+            title=args.title,
+            priority=args.priority,
+            due_date=args.due,
+            category=args.category,
         ):
             print(f"✓ Updated todo #{args.id}")
         else:
