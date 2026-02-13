@@ -286,12 +286,12 @@ def print_stats(stats: Dict):
     print(f"Total todos:    {stats['total']}")
     print(f"Completed:      {stats['completed']}")
     print(f"Pending:        {stats['pending']}")
-    print(f"\nBy Priority (pending):")
+    print("\nBy Priority (pending):")
     for priority, count in stats["by_priority"].items():
         emoji = {"high": "🔴", "medium": "🟡", "low": "🟢"}.get(priority, "⚪")
         print(f"{emoji} {priority.capitalize()}: {count}")
     if stats["by_category"]:
-        print(f"\nBy Category (pending):")
+        print("\nBy Category (pending):")
         for cat, count in sorted(stats["by_category"].items()):
             print(f"• {cat}: {count}")
     print("=" * 40 + "\n")

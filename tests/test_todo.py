@@ -1,6 +1,5 @@
 """Tests for todo CLI manager."""
 
-import json
 import tempfile
 from pathlib import Path
 import pytest
@@ -75,7 +74,7 @@ class TestTodoManager:
         assert len(temp_manager.todos) == 0
 
     def test_edit_todo(self, temp_manager):
-        todo = temp_manager.add("Original")
+        temp_manager.add("Task")
         assert temp_manager.edit(1, title="Updated", priority="high")
         assert temp_manager.todos[0].title == "Updated"
         assert temp_manager.todos[0].priority == "high"
