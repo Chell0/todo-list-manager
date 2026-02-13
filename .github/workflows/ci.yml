@@ -33,11 +33,11 @@ jobs:
 
     - name: Test with pytest and generate coverage
       run: |
-        pytest --cov=todo --cov-report=xml --cov-report=term
+        pytest --cov --cov-branch --cov-report=xml
 
     - name: Upload coverage to Codecov
       if: matrix.python-version == '3.12'
-      uses: codecov/codecov-action@v4
+      uses: codecov/codecov-action@v5
       with:
         files: ./coverage.xml
         fail_ci_if_error: false
