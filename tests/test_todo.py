@@ -31,7 +31,7 @@ class TestTodoItem:
             "due_date": None,
             "category": "general",
             "completed": False,
-            "created_at": "2025-01-01T00:00:00"
+            "created_at": "2025-01-01T00:00:00",
         }
         todo = TodoItem.from_dict(data)
         assert todo.id == 1
@@ -43,8 +43,8 @@ class TestTodoManager:
 
     @pytest.fixture
     def temp_manager(self):
-        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.json') as f:
-            f.write('[]')
+        with tempfile.NamedTemporaryFile(mode="w", delete=False, suffix=".json") as f:
+            f.write("[]")
             temp_path = f.name
         manager = TodoManager(temp_path)
         yield manager
